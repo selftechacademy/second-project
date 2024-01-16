@@ -1,0 +1,10 @@
+.square {
+  padding: 3px;
+  background-color: cadetblue;
+}
+
+.rounded {
+  padding: 3px;
+  border-radius: 5px;
+  background-color: tomato;
+}
