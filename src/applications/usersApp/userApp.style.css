@@ -1,0 +1,13 @@
+table {
+  border: 1px solid black;
+}
+
+th,
+td {
+  border: 1px solid black;
+  padding: 5px;
+}
+
+tr:nth-child(even) {
+  background-color: rgba(216, 215, 215, 0.862);
+}
