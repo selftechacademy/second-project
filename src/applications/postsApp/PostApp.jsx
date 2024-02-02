@@ -1,50 +1,59 @@
 import React, { useEffect, useState } from "react";
 import "./postApp.style.css";
 
+const getUrl = "https://jsonplaceholder.typicode.com/users/1/posts";
+const postUrl = "https://jsonplaceholder.typicode.com/posts";
+
 const PostApp = () => {
   const [posts, setPosts] = useState([]);
 
-  const getPosts = async () => {
-    try {
-      const response = await fetch(
-        "https://jsonplaceholder.typicode.com/posts"
-      );
-      const data = await response.json();
-      console.log("data", data);
-      setPosts(data);
-    } catch (err) {}
-  };
-
-  const addPost = async () => {
-    try {
-      const response = await fetch(
-        "https://jsonplaceholder.typicode.com/posts",
-        {
-          method: "POST",
-          body: JSON.stringify({
-            title: "Askar",
-            body: "Lorem ipsum dolor sit amet consectetur, adipisicing elit. Eum, ullam?",
-            userId: 1,
-          }),
-          headers: {
-            "Content-type": "application/json; charset=UTF-8",
-          },
-        }
-      );
-
-      console.log(await response.json());
-    } catch (err) {}
-  };
-
   useEffect(() => {
     getPosts();
-    addPost();
   }, []);
+
+  const getPosts = async () => {
+    try {
+      const response = await fetch(getUrl);
+      const data = await response.json();
+      setPosts(data);
+    } catch (error) {}
+  };
+
+  const writePost = async () => {
+    try {
+      const response = await fetch(postUrl, {
+        method: "POST",
+        body: JSON.stringify(singlePost),
+        headers: {
+          "Content-type": "application/json; charset=UTF-8",
+        },
+      });
+      const data = await response.json();
+      setPosts([data, ...posts]);
+    } catch (err) {
+      console.log("error", err);
+    }
+    //update the posts list
+  };
+
   return (
     <div>
-      {posts.map((el) => (
-        <p>{el.body}</p>
-      ))}
+      <form>
+        <input />
+        <textarea />
+        <button>post</button>
+      </form>
+
+      <div>
+        {posts.map((el) => {
+          return (
+            <div>
+              <h3>{el.title}</h3>
+              <p>{el.body}</p>
+            </div>
+          );
+        })}
+      </div>
     </div>
   );
 };
